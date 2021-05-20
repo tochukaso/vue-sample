@@ -1,72 +1,83 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
-
-  <div class="flex m-10">
-    <draggable class="dragArea list-group w-full" :list="list" @change="log">
-      <div
-        class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
-        v-for="element in list"
-        :key="element.name"
+  <Splitter>
+    <SplitterPanel style="height: 300px" :size="15">
+      <h3>デザインパーツ</h3>
+      <draggable
+        class="dragArea list-group w-full"
+        :list="list"
+        @change="log"
+        :clone="cloneComponent"
       >
-        {{ element.name }}
-      </div>
-    </draggable>
-  </div>
+        <Dialog header="Header" v-model:visible="display">
+          <InputText v-model="textVal"></InputText>
+        </Dialog>
+        <img
+          alt="Vue logo"
+          src="../assets/txt.png"
+          style="width: 70px;"
+          @click="changeText"
+        />
+      </draggable>
+    </SplitterPanel>
+    <SplitterPanel :size="85">
+      <div class="flex m-10">
+        <draggable
+          class="dragArea list-group w-full"
+          :list="list"
+          @change="log"
+        >
+          <div
+            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center"
+            v-for="element in list"
+            :key="element.name"
+          >
+            {{ element.name }}
+          </div>
 
-  <Dialog></Dialog>
-  <InputText v-model="textVal"></InputText>
-  <h6>{{textVal}}</h6>
+          <h6>{{ textVal }}</h6>
+        </draggable>
+      </div>
+    </SplitterPanel>
+  </Splitter>
 </template>
 
 <script>
 import { VueDraggableNext } from 'vue-draggable-next'
+//let id = 4
 export default {
   components: {
-      draggable: VueDraggableNext,
+    draggable: VueDraggableNext
   },
   name: 'HelloWorld',
   props: {
     msg: String
   },
-  data() {
+  data () {
     return {
       enabled: true,
       list: [
         { name: 'John', id: 1 },
         { name: 'Joao', id: 2 },
         { name: 'Jean', id: 3 },
-        { name: 'Gerard', id: 4 },
+        { name: 'Gerard', id: 4 }
       ],
-      textVal: "prime vue text val",
+      textVal: 'prime vue text val',
+      visibleLeft: true,
       dragging: false,
+      display: false,
+      componentType: ''
+    }
+  },
+  methods: {
+    changeText () {
+      this.componentType = 'txt'
+    },
+    cloneComponent (obj) {
+      if (this.componentType === 'txt') {
+        this.display = true
+        //this.list.push({ name: 'new', id: id++ })
+      }
+      return obj
     }
   }
 }
