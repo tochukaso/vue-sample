@@ -1,40 +1,33 @@
 <template>
-    <v-row>
+  <div>
+    <v-container style="margin-left:0;">
+      <v-row >
+        <v-col cols="2">
+          This is a Home page
 
-        <sidebar></sidebar>
-
-        <v-col md="9" class="mt-3 mb-3">
-            <v-row>
-                <v-col v-for="product in products" :key="product.id" lg="4" md="6" class="mb-4">
-                    <v-card class="h-100">
-                        <a href="#"><v-img :src="product.photo" alt=""/></a>
-                        <v-card-title>
-                            <a href="#">{{ product.name }}</a>
-                        </v-card-title>
-                        <v-card-subtitle>
-                            <h3>${{ product.price }}</h3>
-                        </v-card-subtitle>
-                        <v-card-text>{{ product.description }}</v-card-text>
-                    </v-card>
-                </v-col>
-            </v-row>
+          <v-img
+            :src="require('../assets/logo.svg')"
+            class="my-3"
+            contain
+            height="200"
+            style="background-position: left;"
+            content-class="logo-img"
+          />
         </v-col>
-    </v-row>
-    <!-- /.row -->
-
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
-<script>
-    import Sidebar from "../components/Sidebar";
+<style scoped>
+.logo-img {
+    background-position: left;
+}
 
-    export default {
-        data() {
-            return {
-                products: {}
-            }
-        },
-        components: {
-            'sidebar': Sidebar
-        }
-    }
-</script>
+.v-image__image--contain {
+    background-position: left !important;
+}
+
+</style>
+
+<script></script>

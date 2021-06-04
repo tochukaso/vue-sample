@@ -1,8 +1,8 @@
 <template>
-  <v-col md="3" v-if="open">
+  <v-col md="3" v-if="open" class="sidebar">
     <h2 class="my-3">パーツ</h2>
     <v-card>
-      <v-list dense>
+      <v-list light>
         <v-list-item link href="#">
           <v-list-item-action>
             <v-icon>mdi-format-text</v-icon>
@@ -32,6 +32,13 @@
   </v-col>
 </template>
 
+<style scoped>
+.sidebar {
+  background-color: #3fb983;
+  color: #ffffff;
+}
+</style>
+
 <script>
 export default {
   props: {
@@ -39,15 +46,16 @@ export default {
       type: Boolean
     }
   },
-  data () {
+  data() {
     return {
       drawer: true
-    }
+    };
   },
   methods: {
-    log () {
-      console.log('log')
+    log() {
+      console.log("log");
     }
-  }
-}
+  },
+  emits: ["toggle"]
+};
 </script>
